@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, createContext } from "react";
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
-import { auth, db } from "../firebase/config";
+import { collection, doc, getDocs, serverTimestamp, updateDoc } from "firebase/firestore";
+import {  auth, db } from "../firebase/config";
 
 const FireBaseContext = createContext();
 
@@ -19,7 +19,6 @@ export const FireBaseProvider = ({ children }) => {
         // Signed in
         const user = userCredential.user;
         setCurrentUser(user);
-        console.log(user);
         // ...
       })
       .catch((error) => {
@@ -73,6 +72,7 @@ export const FireBaseProvider = ({ children }) => {
 
      await updateDoc(docRef, {
        score: score + newScore,
+       timestamp: serverTimestamp(),
      });
      loadDocs();
    } catch (error) {
