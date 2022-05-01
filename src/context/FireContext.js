@@ -67,7 +67,6 @@ export const FireBaseProvider = ({ children }) => {
  const updateScore = async (id,score, newScore) => {
    newScore = parseInt(newScore);
    try {
-     if (newScore <= 0) throw new Error("Enter a proper value");
      const docRef = doc(db, "teams", id);
 
      await updateDoc(docRef, {
