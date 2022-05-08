@@ -60,10 +60,26 @@ export const FireBaseProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
     }
-    console.log(data);
+
     setLoading(false);
   };
     
+  const updateTime = async () =>
+  {
+    try {
+      data.forEach(async (item) =>
+      {
+       const docRef = doc(db, "teams", item.id);
+
+       await updateDoc(docRef, {
+         timestamp: serverTimestamp(),
+       });
+     })
+
+    } catch (error) {
+      console.log(error);
+    }
+}
  const updateScore = async (id,score, newScore) => {
    newScore = parseInt(newScore);
    try {
@@ -73,6 +89,7 @@ export const FireBaseProvider = ({ children }) => {
        score: score + newScore,
        timestamp: serverTimestamp(),
      });
+     updateTime()
      loadDocs();
    } catch (error) {
      alert(error);
@@ -96,7 +113,8 @@ export const FireBaseProvider = ({ children }) => {
         login,
         logOut,
         loadDocs,
-        updateScore
+      updateScore,
+        updateTime
     }
 
     return (
