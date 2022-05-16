@@ -33,7 +33,6 @@ const Login = () =>
     const formSubmit = async(e) =>
     {
       e.preventDefault()
-      console.log("hai")
 
     try {
       await login(formData.email, formData.password)
